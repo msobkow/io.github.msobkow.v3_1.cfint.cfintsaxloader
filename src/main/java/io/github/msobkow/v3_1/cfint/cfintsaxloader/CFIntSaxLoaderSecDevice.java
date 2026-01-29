@@ -75,7 +75,6 @@ public class CFIntSaxLoaderSecDevice
 		// Common XML Attributes
 		String attrId = null;
 		// SecDevice Attributes
-		String attrPubKey = null;
 		// SecDevice References
 		ICFIntSecUserObj refSecUser = null;
 		// Attribute Extraction
@@ -119,15 +118,6 @@ public class CFIntSaxLoaderSecDevice
 					}
 					attrId = attrs.getValue( idxAttr );
 				}
-				else if( attrLocalName.equals( "PubKey" ) ) {
-					if( attrPubKey != null ) {
-						throw new CFLibUniqueIndexViolationException( getClass(),
-							S_ProcName,
-							S_LocalName,
-							attrLocalName );
-					}
-					attrPubKey = attrs.getValue( idxAttr );
-				}
 				else if( attrLocalName.equals( "schemaLocation" ) ) {
 					// ignored
 				}
@@ -144,7 +134,6 @@ public class CFIntSaxLoaderSecDevice
 			// Save named attributes to context
 			CFLibXmlCoreContext curContext = getParser().getCurContext();
 			curContext.putNamedValue( "Id", attrId );
-			curContext.putNamedValue( "PubKey", attrPubKey );
 
 			// Convert string attributes to native Java types
 			// and apply the converted attributes to the editBuff.
@@ -156,9 +145,6 @@ public class CFIntSaxLoaderSecDevice
 			else {
 				natId = null;
 			}
-			String natPubKey = attrPubKey;
-			editBuff.setOptionalPubKey( natPubKey );
-
 			// Get the scope/container object
 
 			CFLibXmlCoreContext parentContext = curContext.getPrevContext();
@@ -203,7 +189,6 @@ public class CFIntSaxLoaderSecDevice
 						break;
 					case Update:
 						editSecDevice = (ICFIntSecDeviceEditObj)origSecDevice.beginEdit();
-						editSecDevice.setOptionalPubKey( editBuff.getOptionalPubKey() );
 						break;
 					case Replace:
 						editSecDevice = (ICFIntSecDeviceEditObj)origSecDevice.beginEdit();
