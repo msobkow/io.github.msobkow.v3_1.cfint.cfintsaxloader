@@ -381,6 +381,7 @@ public class CFIntSaxLoader
 	protected CFIntSaxLoaderSecUser getSecUserHandler() {
 		if( secUserHandler == null ) {
 			secUserHandler = new CFIntSaxLoaderSecUser( this );
+			secUserHandler.addElementHandler( "SecSession", getSecSessionHandler() );
 			secUserHandler.addElementHandler( "SecUserPassword", getSecUserPasswordHandler() );
 			secUserHandler.addElementHandler( "SecUserEMConf", getSecUserEMConfHandler() );
 			secUserHandler.addElementHandler( "SecUserPWReset", getSecUserPWResetHandler() );
@@ -517,7 +518,6 @@ public class CFIntSaxLoader
 			saxDocHandler.addElementHandler( "ISOLang", getISOLangHandler() );
 			saxDocHandler.addElementHandler( "ISOTZone", getISOTZoneHandler() );
 			saxDocHandler.addElementHandler( "MimeType", getMimeTypeHandler() );
-			saxDocHandler.addElementHandler( "SecSession", getSecSessionHandler() );
 			saxDocHandler.addElementHandler( "SecSysGrp", getSecSysGrpHandler() );
 			saxDocHandler.addElementHandler( "SecSysRole", getSecSysRoleHandler() );
 			saxDocHandler.addElementHandler( "SecUser", getSecUserHandler() );
